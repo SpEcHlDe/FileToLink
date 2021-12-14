@@ -6,7 +6,7 @@ from FileToLink import bot, Config
 
 
 async def archive_msg(msg: Message):
-    buttons = [[InlineKeyboardButton("🚫", callback_data=f'delete-file')]]
+    buttons = [[InlineKeyboardButton("🚫", callback_data='delete-file')]]
 
     forward = msg.forward_from or msg.forward_from_chat
 

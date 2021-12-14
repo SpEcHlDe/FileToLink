@@ -26,15 +26,7 @@ class TelegramClient(Client):
                                              bot_token=bot_token,
                                              sleep_threshold=sleep_threshold)
 
-    async def get_part_file(
-            self,
-            file_id: FileId,
-            file_path: str,
-            file_size: int,
-            start: int = 0,
-            stop: int = None,
-            limit: int = 1024 * 1024
-    ) -> range:
+    async def get_part_file(self, file_id: FileId, file_path: str, file_size: int, start: int = 0, stop: int = None, limit: int = 1024**2) -> range:
         dc_id = file_id.dc_id
 
         async with self.media_sessions_lock:
@@ -86,16 +78,15 @@ class TelegramClient(Client):
                     user_id=file_id.chat_id,
                     access_hash=file_id.chat_access_hash
                 )
+            elif file_id.chat_access_hash == 0:
+                peer = raw.types.InputPeerChat(
+                    chat_id=-file_id.chat_id
+                )
             else:
-                if file_id.chat_access_hash == 0:
-                    peer = raw.types.InputPeerChat(
-                        chat_id=-file_id.chat_id
-                    )
-                else:
-                    peer = raw.types.InputPeerChannel(
-                        channel_id=utils.get_channel_id(file_id.chat_id),
-                        access_hash=file_id.chat_access_hash
-                    )
+                peer = raw.types.InputPeerChannel(
+                    channel_id=utils.get_channel_id(file_id.chat_id),
+                    access_hash=file_id.chat_access_hash
+                )
 
             location = raw.types.InputPeerPhotoFileLocation(
                 peer=peer,
@@ -170,14 +161,7 @@ class TelegramClient(Client):
         else:
             return range(start, start + size + 1)
 
-    async def download_part(
-            self,
-            message: Union["types.Message", str],
-            file_name: str = "downloads/",
-            start: int = 0,
-            stop: int = None,
-            limit: int = 1024 * 1024
-    ) -> range:
+    async def download_part(self, message: Union["types.Message", str], file_name: str = "downloads/", start: int = 0, stop: int = None, limit: int = 1024**2) -> range:
 
         available_media = ("audio", "document", "photo", "sticker", "animation", "video", "voice", "video_note",
                            "new_chat_photo")
@@ -193,11 +177,7 @@ class TelegramClient(Client):
         else:
             media = message
 
-        if isinstance(media, str):
-            file_id_str = media
-        else:
-            file_id_str = media.file_id
-
+        file_id_str = media if isinstance(media, str) else media.file_id
         file_id_obj = FileId.decode(file_id_str)
 
         file_type = file_id_obj.file_type
