@@ -20,11 +20,8 @@ class TelegramClient(Client):
             bot_token: str = None,
             sleep_threshold: int = Session.SLEEP_THRESHOLD
     ):
-        super(TelegramClient, self).__init__(session_name,
-                                             api_id=api_id,
-                                             api_hash=api_hash,
-                                             bot_token=bot_token,
-                                             sleep_threshold=sleep_threshold)
+        super(TelegramClient, self).__init__(session_name, api_id=api_id, api_hash=api_hash,
+                                             bot_token=bot_token, sleep_threshold=sleep_threshold)
 
     async def get_part_file(self, file_id: FileId, file_path: str, file_size: int, start: int = 0, stop: int = None, limit: int = 1024**2) -> range:
         dc_id = file_id.dc_id
@@ -233,8 +230,5 @@ class TelegramClient(Client):
         return rng
 
 
-bot = TelegramClient(Config.Session,
-                     api_id=Config.API_ID,
-                     api_hash=Config.API_HASH,
-                     bot_token=Config.Token,
-                     sleep_threshold=Config.Sleep_Threshold)
+bot = TelegramClient(Config.Session, api_id=Config.API_ID, api_hash=Config.API_HASH,
+                     bot_token=Config.Token, sleep_threshold=Config.Sleep_Threshold)
