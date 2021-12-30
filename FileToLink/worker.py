@@ -1,5 +1,6 @@
-from pathlib import Path
 from asyncio import sleep
+from pathlib import Path
+from urllib.parse import quote
 import aiofiles
 import os
 
@@ -8,6 +9,7 @@ from pyrogram.errors import MessageDeleteForbidden, MessageIdInvalid
 from pyrogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 
 from FileToLink import bot, Config, Strings
+from FileToLink.utils import progress_bar
 
 
 class Worker:
@@ -23,7 +25,6 @@ class Worker:
                       msg.voice or msg.video_note or msg.sticker or msg.animation)
         self.size = self.media.file_size
         self.id = self.media.file_unique_id
-        self.link = f'{Config.Link_Root}dl/{self.archive_id}'
         self.current_dl: int = 0  # Number of currently downloading parts
 
         if hasattr(self.media, 'mime_type') and self.media.mime_type not in (None, ''):
@@ -43,6 +44,8 @@ class Worker:
             self.name = f'{self.id}.{extension}'
         else:
             self.name = self.id + (f".{extension}" if extension else '')
+
+        self.link = f'{Config.Link_Root}dl/{self.archive_id}/{quote(self.name)}'
 
         if self.mime_type:
             self.stream = (bool(self.mime_type.split('/')[0] in ('video', 'audio')) or
@@ -269,9 +272,3 @@ async def delete_file_handler(_, cb: CallbackQuery):
     except MessageDeleteForbidden:
         button = InlineKeyboardButton(Strings.delete_manually_button, callback_data='time-out')
         await msg.edit_reply_markup(InlineKeyboardMarkup([[button]]))
-
-
-def progress_bar(current, total, length=16, finished='█', unfinished='░'):
-    rate = current / total
-    finished_len = int(length * rate) if rate <= 1 else length
-    return f'{finished * finished_len}{unfinished * (length - finished_len)} {int(rate * 100)}%'
