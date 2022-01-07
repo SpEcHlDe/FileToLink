@@ -9,6 +9,7 @@ from pyrogram.errors import AuthKeyDuplicated, AuthKeyInvalid, SessionRevoked, S
 from pyrogram.methods.utilities.idle import idle
 from pyrogram.storage import MemoryStorage
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
+from base64 import standard_b64encode, standard_b64decode
 
 from FileToLink import bot, Config, Strings
 from FileToLink.archive import archive_msg
@@ -19,6 +20,11 @@ from FileToLink.utils import participant
 
 Last_Time = {}
 
+def str_to_b64(__str: str) -> str:
+    str_bytes = __str.encode('ascii')
+    bytes_b64 = standard_b64encode(str_bytes)
+    b64 = bytes_b64.decode('ascii')
+    return b64
 
 @bot.on_message(filters.media & filters.private & filters.incoming)
 async def main(_, msg: Message):
