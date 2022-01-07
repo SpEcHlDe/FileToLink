@@ -34,6 +34,7 @@ class Strings:
     start = Config.Start_Message
     dl_link = "🔗 Download LINK"
     st_link = "🎞 Stream LINK"
+    st_link_1 = "📹 Stream LINK"
     generating_link = "**⏳ Generating Link...**"
     bot_channel = "📢 Bot Channel"
     dev_channel = "🤖 Developer"
