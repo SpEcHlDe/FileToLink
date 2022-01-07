@@ -62,7 +62,9 @@ async def main(_, msg: Message):
     buttons = [[InlineKeyboardButton(Strings.dl_link, url=dl_link)]]
     if worker.stream:
         st_link = f'{dl_link}?st=1'  # Stream Link
+        st_link_1 = f'https://ab-player.herokuapp.com/play?id={dl_link}&en=0'
         buttons.append([InlineKeyboardButton(Strings.st_link, url=st_link)])
+        buttons.append([InlineKeyboardButton(Strings.st_link_1, url=st_link_1)])
     buttons.append([InlineKeyboardButton(Strings.update_link, callback_data=f'fast|{worker.archive_id}')])
     reply_markup = InlineKeyboardMarkup(buttons)
 
