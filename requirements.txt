@@ -1,5 +1,5 @@
 pip>=21.1.2
-sqlite3
+sqlite
 pyrogram==1.2.20
 TgCrypto~=1.2.2
 
