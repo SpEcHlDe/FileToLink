@@ -1,2 +1,2 @@
-apt-get install libsqlite3-dev
+apt install libsqlite3-dev
 python3 -m FileToLink
