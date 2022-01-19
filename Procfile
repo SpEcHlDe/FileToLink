@@ -1,1 +1,1 @@
-web: python3 -m FileToLink
+web: bash main.sh
