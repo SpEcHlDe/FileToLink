@@ -42,8 +42,8 @@ class Strings:
     dev_channel = "🤖 Developer"
     fast = """⚡️**The link has been updated to a fast link**
 The duration of this fast link doesn't exceed one day, and then it will **return to a normal link**
-But you can re-update it again to become a fast link"""
-For more information press /help"
+But you can re-update it again to become a fast link
+For more information press /help"""
     update_link = "⚡ Update To Fast Link"
     update_limited = (f"⛔ You can update just {Config.Max_Fast_Processes} link in one time, "
                       "please wait until previous update to complete")
