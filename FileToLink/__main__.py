@@ -99,6 +99,10 @@ async def start(_, msg: Message):
     if Config.Bot_Channel:
         buttons.append([InlineKeyboardButton(Strings.bot_channel, url=f'https://t.me/{Config.Bot_Channel}')])
     await msg.reply_text(Strings.start, reply_markup=InlineKeyboardMarkup(buttons))
+    
+@bot.on_message(filters.command("help"))
+async def help(_, msg: Message):
+    await msg.reply_text(Strings.help_)
 
 
 async def keep_awake(sleep_time=20 * 60):
