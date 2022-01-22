@@ -12,6 +12,7 @@ class Config:
     Port = int(os.environ.get("PORT"))
     Archive_Channel_ID = int(os.environ.get("ARCHIVE_CHANNEL_ID"))
     Start_Message = os.environ.get("Start_Message")
+    Help_Message = os.environ.get("Help_Message")
     Bot_Channel = os.environ.get("Bot_Channel_UserName")
     if Bot_Channel and Bot_Channel.startswith("@"):
         Bot_Channel = Bot_Channel[1:]
@@ -32,6 +33,7 @@ class Config:
 
 class Strings:
     start = Config.Start_Message
+    help_ = Config.Help_Message
     dl_link = "🔗 Download LINK"
     st_link = "🎞 Stream LINK"
     st_link_1 = "📹 Stream LINK"
